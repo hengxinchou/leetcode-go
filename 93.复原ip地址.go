@@ -5,53 +5,82 @@
  */
 
 // @lc code=start
-func restoreIpAddresses(s string) []string {
+package main
 
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	var a string
+	a = "25525511135"
+	fmt.Printf("%s, %v\n", a, restoreIpAddresses(a))
+
+	a = "0000"
+	fmt.Printf("%s, %v\n", a, restoreIpAddresses(a))
+
+	a = "1111"
+	fmt.Printf("%s, %v\n", a, restoreIpAddresses(a))
+
+	a = "101023"
+	fmt.Printf("%s, %v\n", a, restoreIpAddresses(a))
+
+	a = "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+	fmt.Printf("%s, %v\n", a, restoreIpAddresses(a))
 }
+
+func restoreIpAddresses(s string) []string {
+	if len(s) < 4 {
+		return []string{}
+	}
+
+	if len(s) > 12 {
+		return []string{}
+	}
+
+	// size := len(s)
+	res := []string{}
+
+	// for i := 0 ; i < len(s) - 3 ; i++ {
+	for j := 1; j < len(s)-2; j++ {
+		for k := j + 1; k < len(s)-1; k++ {
+			for l := k + 1; l < len(s); l++ {
+				tmp := []string{s[0:j], s[j:k], s[k:l], s[l:]}
+				// fmt.Printf("tmp is %v, %d, %d, %d, %d\n", tmp, i, j, k, l)
+				if validArray(tmp) {
+					res = append(res, strings.Join(tmp, "."))
+				}
+			}
+		}
+	}
+	// }
+	return res
+}
+
+func validArray(a []string) bool {
+	// fmt.Printf("%v, size is %d\n", a, len(a))
+	for i := 0; i < len(a); i++ {
+		if !valid(a[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+func valid(s string) bool {
+	// fmt.Printf("valid s is %s\n", s)
+	if s[0] == '0' && len(s) > 1 {
+		return false
+	}
+
+	num, _ := strconv.Atoi(s)
+	if num >= 0 && num <= 255 {
+		return true
+	} else {
+		return false
+	}
+}
+
 // @lc code=end
-var result []string
-
-func restoreIpAddresses(s string) []string {
-	if len(s) < 4 || len(s) > 12 {
-		return nil
-	}
-    result = []string{}
-	track := make([]string, 0)
-	backtrack(s, track, 1)
-	return result
-}
-
-func backtrack(s string, track []string, key int) {
-	// 结束条件
-	// key为段数，一共4段，选完4段，同时字符串选完时结束
-	if key == 5 {
-		if len(s) == 0 {
-			str := strings.Join(track, ".")
-			result = append(result, str)
-		}
-		return
-	}
-	// 选择列表
-	// 每一段最大选择3位
-	for j := 1; j <= 3; j++ {
-		if j <= len(s) {
-			// 选1-3位数字
-			v, err := strconv.Atoi(s[:j])
-			if err == nil && v <= 255 {
-				// 做选择
-				//fmt.Printf("第 %d 段，选择 %d位 s: %s\n", key, j, s[:j])
-				track = append(track, s[:j])
-				str := s[j:]
-				// 下一段选择
-				backtrack(str, track, key+1)
-				// 撤销选择
-				track = track[:len(track)-1]
-			}
-            // 每一段只能为0，不能为01
-            if v == 0 {
-				break
-			}
-		}
-	}
-}
-

@@ -7,9 +7,11 @@
 // @lc code=start
 package main
 
-import "fmt"
-import "strconv"
-import "strings"
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 func main() {
 
@@ -42,7 +44,7 @@ func compareVersion(version1 string, version2 string) int {
 
 	var tmp1, tmp2 int
 	var i int
-	for i = 0 ; i < len(arr1) && i < len(arr2) ; i++ {
+	for i = 0; i < len(arr1) && i < len(arr2); i++ {
 		tmp1, _ = strconv.Atoi(arr1[i])
 		tmp2, _ = strconv.Atoi(arr2[i])
 		if tmp1 > tmp2 {
@@ -54,34 +56,34 @@ func compareVersion(version1 string, version2 string) int {
 		}
 	}
 
-	for ;i < len(arr1); i++ {
+	for ; i < len(arr1); i++ {
 		tmp1, _ = strconv.Atoi(arr1[i])
 		if tmp1 > 0 {
 			return 1
 		}
 		if tmp1 == 0 {
-		    if i == len(arr1) - 1 {
+			if i == len(arr1)-1 {
 				return 0
 			} else {
 				continue
 			}
-		} 
+		}
 	}
 
-	for ;i < len(arr2); i++{
+	for ; i < len(arr2); i++ {
 		tmp2, _ = strconv.Atoi(arr2[i])
 		if tmp2 > 0 {
 			return -1
 		}
 		if tmp2 == 0 {
-		    if i == len(arr2) - 1 {
+			if i == len(arr2)-1 {
 				return 0
 			} else {
 				continue
 			}
-		} 
-	}	
+		}
+	}
 	return 0
 }
-// @lc code=end
 
+// @lc code=end
