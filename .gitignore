@@ -1,0 +1,6 @@
+*.exe
+offers/
+test/
+self/
+.vscode/
+
