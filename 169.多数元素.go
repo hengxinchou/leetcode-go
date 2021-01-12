@@ -7,9 +7,13 @@
 // @lc code=start
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
-func majorityElement(nums []int) int {
+// 暴力解法
+func majorityElement1(nums []int) int {
 	a := map[int]int{}
 	for _, i := range nums {
 		a[i]++
@@ -23,16 +27,23 @@ func majorityElement(nums []int) int {
 		}
 	}
 
-	return  -1
+	return -1
 }
+
+// 众数必然占据 n/2 的位置
+func majorityElement(nums []int) int {
+	sort.Ints(nums)
+	return nums[len(nums)/2]
+}
+
 // @lc code=%end
-func main(){
-	a1 := []int{3,2,3}
+func main() {
+	a1 := []int{3, 2, 3}
 	fmt.Printf("%v, %v\n", a1, majorityElement(a1))
 
 	a2 := []int{1}
 	fmt.Printf("%v, %v\n", a2, majorityElement(a2))
 
-	a3 := []int{2,2,1,1,1,2,2}
+	a3 := []int{2, 2, 1, 1, 1, 2, 2}
 	fmt.Printf("%v, %v\n", a3, majorityElement(a3))
 }
