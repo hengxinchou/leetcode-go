@@ -13,49 +13,52 @@
  *     Right *TreeNode
  * }
  */
- package main 
- import "fmt"
- 
- type TreeNode struct {
-	 Val   int
-	 Left  *TreeNode
-	 Right *TreeNode
- }
- 
-func preorderTraversal(root *TreeNode) []int {
-	// if root == nil {
-	// 	return nil
-	// }
+package main
 
-	// res := []int{root.Val}
+import "fmt"
 
-	// if root.Left != nil {
-	// 	tmp := preorderTraversal(root.Left)
-	// 	res = append(res, tmp...)
-	// }
-	// if root.Right != nil {
-		// tmp := preorderTraversal(root.Right)
-		// res = append(res, tmp...)
-	// }
-	// return res
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+// 使用递归
+func preorderTraversal1(root *TreeNode) []int {
 	if root == nil {
-		return nil 
+		return nil
+	}
+
+	res := []int{root.Val}
+
+	if root.Left != nil {
+		tmp := preorderTraversal(root.Left)
+		res = append(res, tmp...)
+	}
+	if root.Right != nil {
+		tmp := preorderTraversal(root.Right)
+		res = append(res, tmp...)
+	}
+	return res
+}
+
+// 使用栈
+func preorderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return nil
 	}
 	stack := make([]*TreeNode, 0)
 	res := []int{}
 	cur := root
 	for cur != nil || len(stack) > 0 {
-		// if cur != nil {
-			// res := append(res, cur.Val)
-		// }
 		for cur != nil {
-		  fmt.Printf("cur is %d\n", cur.Val)
-		  res = append(res, cur.Val)
-		  stack = append(stack, cur)
-		  cur = cur.Left
+			fmt.Printf("cur is %d\n", cur.Val)
+			res = append(res, cur.Val)
+			stack = append(stack, cur)
+			cur = cur.Left
 		}
-		
-		tmp := stack[len(stack) - 1]
+
+		tmp := stack[len(stack)-1]
 		fmt.Printf("tmp is %d\n", tmp.Val)
 		stack = stack[:len(stack)-1]
 		cur = tmp.Right
@@ -64,11 +67,11 @@ func preorderTraversal(root *TreeNode) []int {
 }
 
 // @lc code=end
-func main(){
+func main() {
 	l11 := TreeNode{Val: 6}
-	l21 := TreeNode{Val: 2} 
-	l22 := TreeNode{Val: 8} 
-	l31 := TreeNode{Val: 0} 
+	l21 := TreeNode{Val: 2}
+	l22 := TreeNode{Val: 8}
+	l31 := TreeNode{Val: 0}
 	l32 := TreeNode{Val: 4}
 	l33 := TreeNode{Val: 7}
 	l34 := TreeNode{Val: 9}
@@ -87,4 +90,3 @@ func main(){
 	a := preorderTraversal(&l11)
 	fmt.Printf("%v\n", a)
 }
-

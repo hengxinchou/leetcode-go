@@ -44,7 +44,7 @@ func main() {
 func coinChange(coins []int, amount int) int {
 	map1 := map[int]int{}
 
-	var dfs func(amount int) int
+	var dfs func(amount int) int // 获取有多少个数目
 	dfs = func(amount int) int {
 		if v, ok := map1[amount]; ok {
 			return v
@@ -55,17 +55,17 @@ func coinChange(coins []int, amount int) int {
 			return -1
 		}
 
-		minV := math.MaxInt32
-		for _, v := range coins {
+		minV := math.MaxInt32     // 不是应该找最大的吗？
+		for _, v := range coins { // 遍历每个硬币币值
 			candiate := dfs(amount - v)
-			if candiate < minV && candiate >= 0 {
+			if candiate < minV && candiate >= 0 { // 如果比小的还要小，则取代之
 				minV = candiate
 			}
 		}
 
 		var res int
 		if minV != math.MaxInt32 {
-			res = minV + 1
+			res = minV + 1 // 就是加上 减去的那一个
 		} else {
 			res = -1
 		}
@@ -77,33 +77,33 @@ func coinChange(coins []int, amount int) int {
 	return a
 }
 
-// func coinChange1(coins []int, amount int) int {
-// 	  // fmt.Printf("amount is %d\n", amount)
-// 		if amount == 0 {
-// 			return 0
-// 		} else if amount < 0 {
-// 			return -1
-// 		}
+func coinChange1(coins []int, amount int) int {
+	// fmt.Printf("amount is %d\n", amount)
+	if amount == 0 {
+		return 0
+	} else if amount < 0 {
+		return -1
+	}
 
-// 		candiates := []int{}
-// 		// fmt.Printf("2 amount is %d\n", amount)
-// 		for _, v := range coins {
-// 			  tmp := coinChange1(coins,  amount -v)
-// 				candiates = append(candiates, tmp)
-// 		}
-// 		// fmt.Printf("candiates are %v\n", candiates)
-// 		minV := math.MaxInt32
-// 		for _, v := range candiates {
-// 			if v < minV && v >= 0 {
-// 				minV = v
-// 			}
-// 		}
-// 		if minV != math.MaxInt32 {
-// 			return minV + 1
-// 		} else {
-// 			return -1
-// 		}
-// }
+	candiates := []int{}
+	// fmt.Printf("2 amount is %d\n", amount)
+	for _, v := range coins {
+		tmp := coinChange1(coins, amount-v)
+		candiates = append(candiates, tmp)
+	}
+	// fmt.Printf("candiates are %v\n", candiates)
+	minV := math.MaxInt32
+	for _, v := range candiates {
+		if v < minV && v >= 0 {
+			minV = v
+		}
+	}
+	if minV != math.MaxInt32 {
+		return minV + 1
+	} else {
+		return -1
+	}
+}
 
 // func coinChange3(coins []int, amount int) int {
 // 		sort.Slice(coins, func(i, j int) bool {
@@ -127,27 +127,28 @@ func coinChange(coins []int, amount int) int {
 // 		return count
 // }
 
-// func coinChange2(coins []int, amount int) int {
+func coinChange2(coins []int, amount int) int {
 
-// 	var dfs func(int)
+	var dfs func(int)
 
-// 	count := 0
-// 	dfs = func(left int){
-// 		if 0 == left  {
-// 			count++
-// 			return
-// 		}
-// 		if left < 0 {
-// 			return
-// 		}
+	count := 0
+	dfs = func(left int) {
+		if 0 == left {
+			count++
+			return
+		}
+		if left < 0 {
+			return
+		}
 
-// 		for _, v := range coins {
-// 			dfs(left-v)
-// 		}
-// 	}
-// 	dfs(amount)
-// 	return count
-// }
+		for _, v := range coins {
+			dfs(left - v)
+		}
+	}
+	dfs(amount)
+	return count
+}
+
 // @lc code=end
 
 //动态规划（压缩空间）

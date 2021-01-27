@@ -6,27 +6,26 @@
 
 // @lc code=start
 package main
+
 import "fmt"
 
 func isPalindrome(x int) bool {
 	if x < 0 {
 		return false
 	}
-	// if x >= 0  && x < 10{
-	// 	return true
-	// }
 
 	y := x
 	reverse := 0
 	for y > 0 {
-		reverse =  reverse * 10 + y % 10 
+		reverse = reverse*10 + y%10
 		y = y / 10
 	}
 	return reverse == x
 }
+
 // @lc code=end
 
-func main(){
+func main() {
 	fmt.Printf("-121 is  huiwen? %t\n", isPalindrome(-121))
 	fmt.Printf("121 is  huiwen? %t\n", isPalindrome(121))
 	fmt.Printf("123 is  huiwen? %t\n", isPalindrome(123))
@@ -40,4 +39,3 @@ func main(){
 	// a := 10000
 	// fmt.Println(len(a))
 }
-
