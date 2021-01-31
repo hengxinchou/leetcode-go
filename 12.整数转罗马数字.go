@@ -7,12 +7,14 @@
 // @lc code=start
 package main
 
-import "fmt"
-import "math"
-import "strconv"
+import (
+	"fmt"
+	"math"
+	"strconv"
+)
 
 func main() {
-	var a int 
+	var a int
 	a = 90
 	fmt.Printf("%d, %s\n", a, intToRoman(a))
 
@@ -29,13 +31,15 @@ func intToRoman(num int) string {
 
 	size := len(intSlice) - 1
 	res := ""
-	for num != 0 {
+	for num > 0 {
 		a := strconv.Itoa(num)
 		x := len(a) - 1
-		b :=  (num / int(math.Pow10(x))) * int(math.Pow10(x))
+		// 算有几个罗马数字的倍数
+		b := (num / int(math.Pow10(x))) * int(math.Pow10(x))
+		// 循环
 		for size >= 0 {
 			if b >= intSlice[size] {
-				res += roman[size]	
+				res += roman[size]
 				num -= intSlice[size]
 				break
 			} else {
@@ -45,5 +49,5 @@ func intToRoman(num int) string {
 	}
 	return res
 }
-// @lc code=end
 
+// @lc code=end

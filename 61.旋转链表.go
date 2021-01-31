@@ -13,20 +13,19 @@
  * }
  */
 
- package main
- 
+package main
+
 import "fmt"
- type ListNode struct {
-	Val int
+
+type ListNode struct {
+	Val  int
 	Next *ListNode
 }
 
-
-
 func main() {
-	v1 := ListNode{ 1, nil}
-	v2 := ListNode{ 2, nil}
-	v3 := ListNode{ 3, nil}
+	v1 := ListNode{1, nil}
+	v2 := ListNode{2, nil}
+	v3 := ListNode{3, nil}
 	// v4 := ListNode{ 4, nil}
 	// v5 := ListNode{ 5, nil}
 	v1.Next = &v2
@@ -52,40 +51,39 @@ func print(head *ListNode) {
 	fmt.Println()
 }
 
-
 func rotateRight(head *ListNode, k int) *ListNode {
 	if k == 0 || head == nil {
 		return head
 	}
 
-	length := 0 
+	length := 0
 	cur := head
-	var prev *ListNode = nil
+	var prev *ListNode
 	for cur != nil {
 		prev = cur
 		cur = cur.Next
 		length++
 	}
 
+	// 要串起来，把最后一个节点和head串起来，先形成循环链表，后面再断开
+	prev.Next = head
+
+	// 取模
 	k = k % length
 	if k == 0 {
 		return head
 	}
 
-	prev.Next = head
-	steps := length - k
-
-	// fmt.Printf("steps is %d\n", steps)
-	start := 1
+	//找到要旋转的节点的前一个节点
+	step := length - k - 1
 	cur = head
-	for start < steps {
+	for i := 0; i < step; i++ {
 		cur = cur.Next
-		start++
 	}
 	newHead := cur.Next
 	cur.Next = nil
 
 	return newHead
 }
-// @lc code=end
 
+// @lc code=end

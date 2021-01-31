@@ -12,54 +12,60 @@
  *     Next *ListNode
  * }
  */
-package main 
+package main
+
 import "fmt"
+
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
 func insertionSortList(head *ListNode) *ListNode {
 
-	if head == nil  || head.Next == nil {
+	if head == nil || head.Next == nil {
 		return head
 	}
 
+	// 新建链表哨兵
 	OrderedHead := &ListNode{Next: head}
-	cur := head.Next 
-	head.Next = nil // 封闭上
 
-	// pre := OrderedHead
+	cur := head.Next
+	head.Next = nil // 封闭上, 以防插入到已排序链表时，带上了后面的未排序链表
+	// 遍历未排序链表
 	for cur != nil {
+		tmp := cur.Next // 先记住下一个要遍历的链点
+
+		// 遍历已排序列表，寻找插入位置, 即第一个比待插入链点值大的位置
 		pre := OrderedHead
-		// fmt.Printf("first for, cur is %d\n", cur.Val)
-		// print(OrderedHead.Next)
 		orderedNode := OrderedHead.Next
-		tmp := cur.Next
-		for orderedNode != nil && orderedNode.Val <= cur.Val  {
+		for orderedNode != nil && orderedNode.Val <= cur.Val {
 			pre = orderedNode
 			orderedNode = orderedNode.Next
 		}
-		//不是最后节点，中间节点，Val值比cur要大
-		if orderedNode != nil {
-			// fmt.Printf("if loginc:  orderedNode val is %d\n", orderedNode.Val)
-			cur.Next = orderedNode
-			pre.Next = cur
-		} else {
+
+		// 待插入位置是最后节点
+		if orderedNode == nil {
 			// 到了OrderedList的末尾节点
 			// fmt.Printf("else loginc, pre val is %d\n", pre.Val)
 			pre.Next = cur
 			cur.Next = nil // 要封闭上
-		} 
+		} else {
+			//待插入位置不是最后节点，而是中间节点
+			pre.Next = cur
+			cur.Next = orderedNode
+		}
+
+		// 遍历下一个待插入节点
 		cur = tmp
+
 	}
-	// fmt.Println("the end")
 	return OrderedHead.Next
 }
+
 // @lc code=end
 
-
-func print(head *ListNode){
+func print(head *ListNode) {
 	fmt.Println("print the list")
 	for head != nil {
 		fmt.Printf("%d ", head.Val)

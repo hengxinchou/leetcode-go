@@ -18,16 +18,15 @@ func longestCommonPrefix(strs []string) string {
 		return strs[0]
 	}
 
-	i := 0 
+	i := 0
 	first := strs[0]
 
 	for {
-		if i >=  len(first) {
+		if i >= len(first) {
 			return first[0:i]
 		}
 		s := first[i]
-		for j := 1 ; j < len(strs) ; j++ {
-			// fmt.Printf("i is %d, s is %s, strs[%d] is %s\n", i, string(s), j, strs[j])
+		for j := 1; j < len(strs); j++ {
 			if i >= len(strs[j]) || s != strs[j][i] {
 				return first[0:i]
 			}
@@ -36,13 +35,14 @@ func longestCommonPrefix(strs []string) string {
 	}
 	return first
 }
+
 // @lc code=end
 
-func main(){
-	fmt.Println(longestCommonPrefix([]string{"flower","flow","flight"}))
-	fmt.Println(longestCommonPrefix([]string{"dog","racecar","car"}))
+func main() {
+	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
+	fmt.Println(longestCommonPrefix([]string{"dog", "racecar", "car"}))
 
-	fmt.Println(longestCommonPrefix([]string{"fl","flower","flight"}))
+	fmt.Println(longestCommonPrefix([]string{"fl", "flower", "flight"}))
 	fmt.Println(longestCommonPrefix([]string{}))
 	fmt.Println(longestCommonPrefix(nil))
 }

@@ -8,10 +8,11 @@
 package main
 
 import "fmt"
+
 // import "container/list"
 
-func main(){
-	var s string 
+func main() {
+	var s string
 	s = "(())"
 	fmt.Printf("%s, %t\n", s, isValid(s))
 
@@ -24,7 +25,7 @@ func main(){
 
 func isValid(s string) bool {
 	stack := []byte{}
-	for i := 0 ; i < len(s) ; i++ {
+	for i := 0; i < len(s); i++ {
 		if s[i] == '(' || s[i] == '[' || s[i] == '{' {
 			stack = append(stack, s[i])
 		} else {
@@ -33,11 +34,11 @@ func isValid(s string) bool {
 				return false
 			}
 			prev := stack[len(stack)-1]
-			stack = stack[0: len(stack) -1]
+			stack = stack[0 : len(stack)-1]
 			tmp := string(prev) + string(s[i])
 			fmt.Printf("tmp is %s\n", tmp)
 			if tmp == "()" || tmp == "[]" || tmp == "{}" {
-			  continue
+				continue
 			} else {
 				fmt.Printf("this end, tmp is %v\n", tmp)
 				return false
@@ -52,4 +53,5 @@ func isValid(s string) bool {
 	}
 
 }
+
 // @lc code=end
